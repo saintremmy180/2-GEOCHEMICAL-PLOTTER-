@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PetroPlot — Geochemical Data Plotter</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>PetroPlot</h1>
+      <p>Interactive geochemical plotting tool for petrologists</p>
+    </div>
+    <div class="badge">Harker • Major • Trace</div>
+  </header>
+
+  <main>
+    <section class="panel input-panel">
+      <div class="input-grid">
+        <div>
+          <label for="csvFile">Upload CSV</label>
+          <input id="csvFile" type="file" accept=".csv,text/csv">
+        </div>
+        <div>
+          <label for="csvText">Paste CSV data</label>
+          <textarea id="csvText" placeholder="Sample_ID,SiO2,Al2O3,Fe2O3,MgO,CaO,Na2O,K2O,Ni,Cr&#10;S01,52.1,17.2,8.4,5.9,9.1,3.2,1.4,80,120"></textarea>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="loadPaste" class="primary">Load pasted data</button>
+        <button id="loadDemo">Load demo data</button>
+        <button id="clearData" class="danger">Clear</button>
+      </div>
+      <div id="status" class="status">No data loaded.</div>
+    </section>
+
+    <section class="panel controls">
+      <div>
+        <label for="ySelect">Y-axis</label>
+        <select id="ySelect"></select>
+      </div>
+      <div>
+        <label for="fieldSelect">Discrimination-field overlay</label>
+        <select id="fieldSelect">
+          <option value="none">None</option>
+          <option value="calcalkaline">Calc-alkaline (schematic)</option>
+          <option value="tholeiitic">Tholeiitic (schematic)</option>
+          <option value="alkaline">Alkaline (schematic)</option>
+          <option value="all">All three (schematic)</option>
+        </select>
+      </div>
+      <div>
+        <label for="symbolSelect">Marker</label>
+        <select id="symbolSelect">
+          <option value="circle">Circle</option>
+          <option value="diamond">Diamond</option>
+          <option value="square">Square</option>
+          <option value="triangle-up">Triangle</option>
+        </select>
+      </div>
+      <button id="downloadPng" class="secondary">Export PNG</button>
+    </section>
+
+    <section class="plot-grid">
+      <div class="panel plot-panel">
+        <div class="plot-head">
+          <h2 id="plotTitle">Harker diagram</h2>
+          <span id="sampleCount"></span>
+        </div>
+        <div id="plot"></div>
+      </div>
+
+      <aside class="panel side-panel">
+        <h2>Data summary</h2>
+        <div id="summary">Load a CSV to see detected columns and sample statistics.</div>
+        <hr>
+        <h3>Detected elements</h3>
+        <div id="columns" class="chips"></div>
+        <hr>
+        <p class="note"><strong>Petrological note:</strong> calc-alkaline, tholeiitic and alkaline discrimination is not uniquely defined by Harker coordinates alone. The overlays in this app are deliberately schematic visual guides; for formal classification, use the specific published boundary scheme appropriate to your rock suite (e.g. AFM, TAS, or other validated diagrams).</p>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <span>PetroPlot • client-side CSV processing</span>
+    <span>Zoom: drag • Pan: shift+drag • Reset: double-click</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
